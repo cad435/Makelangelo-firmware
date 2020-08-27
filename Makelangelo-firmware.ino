@@ -405,12 +405,15 @@ void setup() {
 
   //clockISRProfile();
 
+  Serial.println("Dstart");
   motor_setup();
+  Serial.println("Dend");
   findStepDelay();
 
   //easyPWM_init();
 
   // initialize the plotter position.
+  Serial.println("E");
   float pos[NUM_AXIES];
   for(ALL_AXIES(i)) pos[i] = 0;
   
@@ -422,14 +425,17 @@ void setup() {
   gripper.setup();
 #endif
 
+  Serial.println("F");
   teleport(pos);
 
   setFeedRate(DEFAULT_FEEDRATE);
 
+  Serial.println("G");
   robot_setup();
 
   //reportAllMotors();
 
+  Serial.println("H");
   parser.M100();
   parser.ready();
 }

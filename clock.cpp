@@ -17,9 +17,11 @@ void CRITICAL_SECTION_START() {
 void CRITICAL_SECTION_END() {
   portEXIT_CRITICAL_ISR(&timerMux);
 }
-
 #endif
+#if !defined(ESP32) && !defined(ESP8266)
 
+unsigned char _sreg = 0;
+#endif
 
 void clockStart() {
 #ifndef DEBUG_STEPPING

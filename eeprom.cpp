@@ -10,7 +10,6 @@
 #include "configure.h"
 
 #include <EEPROM.h>
-#include <Arduino.h>  // for type definitions
 
 
 Eeprom eeprom;

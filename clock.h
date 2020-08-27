@@ -80,7 +80,7 @@ extern void CRITICAL_SECTION_END();
 // AVR boards
 #define CLOCK_ADJUST(x) {  OCR1A = (x);  }  // microseconds
 
-unsigned char _sreg = 0;
+extern unsigned char _sreg;
 inline void CRITICAL_SECTION_START() {
   _sreg = SREG;  cli();
 }
