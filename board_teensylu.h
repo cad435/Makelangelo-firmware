@@ -7,6 +7,9 @@
 
 
 #if MOTHERBOARD == BOARD_TEENSYLU
+
+#pragma message "Compiling BOARD_TEENSYLU"
+
 #define MAX_MOTORS                 (2)
 
 #define MOTOR_0_LETTER            'X'

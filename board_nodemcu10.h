@@ -5,19 +5,13 @@
 // Please see http://www.github.com/MarginallyClever/makelangeloFirmware for more information.
 //------------------------------------------------------------------------------
 
-// https://www.instructables.com/id/Programming-the-WeMos-Using-Arduino-SoftwareIDE/
+#if MOTHERBOARD == BOARD_NODEMCU10
 
-// cnc shield pins: https://blog.protoneer.co.nz/arduino-cnc-shield/arduino-cnc-shield-scematics-v3-xx/
-// WEMOS D1 R2 pins: https://protosupplies.com/wp-content/uploads/2018/07/Wemos-D1-Pin-Differences.pdf.jpg
-// WEMOS D1 R2 board type should be set to "LOLIN(WEMOS) R1 D2 & mini"
-
-#if MOTHERBOARD == BOARD_WEMOS 
-
-#pragma message "Compiling BOARD_WEMOS"
+#pragma message "Compiling BOARD_NODEMCU10"
 
 // wrong board type set
 #ifndef ESP8266
-  #error "Oops!  Make sure you have 'Wemos D1 R1' selected from the 'Tools -> Boards' menu."
+  #error "Oops!  Make sure you have 'NodeMCU 1.0' selected from the 'Tools -> Boards' menu."
 #endif
 
 // actual limit is 4 but I only have the pins for the first two motors.

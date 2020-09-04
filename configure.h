@@ -28,9 +28,6 @@
 #define TRADITIONAL6    10  // 6 axis machine, no restrictions.
 #define SCARA           11  // 2 axis SCARA.
 
-// default value
-//#define MACHINE_STYLE POLARGRAPH
-
 //------------------------------------------------------------------------------
 // LCD panels supported
 //------------------------------------------------------------------------------
@@ -53,10 +50,8 @@
 #define BOARD_WEMOS        5  // Wemos D1 R2 + CNC Shield v3 (see board_wemos.h)
 #define BOARD_SIXI_MEGA    6  // Arduino Mega + custom shield for Sixi 2 robot
 #define BOARD_CNCV3        7  // Mega2560 + CNC Shield v3
-#define BOARD_ESP32        8  // ESP32 + Marginally Clever Polargraph PCB.
-
-// default value
-//#define MOTHERBOARD BOARD_RUMBA
+#define BOARD_ESP32        8  // ESP32 (untested)
+#define BOARD_NODEMCU10    9  // NodeMCU 1.0.
 
 //------------------------------------------------------------------------------
 // YOUR CHANGES GO HERE

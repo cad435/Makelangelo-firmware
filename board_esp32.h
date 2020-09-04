@@ -13,6 +13,8 @@
 
 #if MOTHERBOARD == BOARD_ESP32
 
+#pragma message "Compiling BOARD_ESP32"
+
 // wrong board type set
 #ifndef ESP32
   #error "Oops!  Make sure you have 'DOIT ESP32 DEVKIT V1' selected from the 'Tools -> Boards' menu."

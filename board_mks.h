@@ -9,6 +9,8 @@
 
 #if MOTHERBOARD == BOARD_MKS
 
+#pragma message "Compiling BOARD_MKS"
+
 #define MAX_MOTORS                 (5)
 
 #define MOTOR_0_LETTER            'X'

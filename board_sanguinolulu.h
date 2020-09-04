@@ -7,6 +7,9 @@
 
 
 #if MOTHERBOARD == BOARD_SANGUINOLULU 
+
+#pragma message "Compiling BOARD_SANGUINOLULU"
+
 #define MAX_MOTORS                 (4)
 
 #define MOTOR_0_LETTER            'X'
