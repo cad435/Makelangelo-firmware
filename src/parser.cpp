@@ -580,7 +580,6 @@ void Parser::G01() {
 
   boolean badAngles=false;
   
-  int i;
   float pos[NUM_AXIES];
   for (ALL_AXIES(i)) {
     float p = axies[i].pos;
@@ -753,7 +752,6 @@ void Parser::M101() {
 
   Serial.print(F("M101 ("));
 
-  int i;
   for (ALL_AXIES(i)) {
     Serial.print(axies[i].limitMin);
     if (i < NUM_AXIES - 1)  Serial.print(',');
