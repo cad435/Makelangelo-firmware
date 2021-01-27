@@ -9,15 +9,19 @@
 
 // ESP32 D1 R2 board type should be set to "LOLIN(ESP32) R1 D2 & mini"
 // or WEMOS D1 ESP32 MINI
-
-#if MOTHERBOARD == BOARD_ESP32
-
 // wrong board type set
+
+//ESP32 used for Makelangelo
+
+
 #  ifndef ESP32
 #    error "Oops!  Make sure you have 'ESP32 D1 R1' selected from the 'Tools -> Boards' menu."
 #  endif
 
-#  define MAX_MOTORS (2)
+
+# if 
+
+#  define NUM_MOTORS (2)
 
 #  define MOTOR_0_LETTER           'X'
 #  define MOTOR_0_DIR_PIN          (15)
@@ -52,4 +56,3 @@
 #  undef HAS_SD
 #  undef HAS_LCD
 
-#endif  // MOTHERBOARD == BOARD_ESP32
