@@ -76,7 +76,7 @@ void GCodeParser::reset() {
 uint8_t GCodeParser::fetchAndParse()
 {
   uint8_t numCharRead = 0;
-  char buffer[58] = {0};
+  char buffer[MAX_CMD_SIZE] = {0};
   if (Serial.available())
   {
     numCharRead = Serial.readBytesUntil('\n', buffer, 58);

@@ -15,6 +15,9 @@ enum AxisEnum : uint8_t {
 #define SERIAL_EOL()                SERIAL_CHAR('\n')
 
 #define STR_UNKNOWN_COMMAND                 "Unknown command: \""
+#define STR_ENQUEUEING                      "enqueueing \""
+#define STR_ERROR                           "Error: "
+#define STR_RESEND                          "Resend: "
 
 #define ERRORPREFIX "Error:"
 #define ECHOPREFIX "echo:"

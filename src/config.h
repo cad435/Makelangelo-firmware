@@ -11,3 +11,5 @@
 #define GCODE_CASE_INSENSITIVE //g1 equals G1
 #define GCODE_QUOTED_STRINGS //allow strings with empty space, wrapped with "..."
 #define SIGNED_CODENUM // Allow for a negative code like D-1 or T-1
+#define BUFSIZE 4 // Number of Gcode-Lines the GcodeQueue buffers
+#define MAX_CMD_SIZE 96 //Max number of characters a Gcode-Command can have

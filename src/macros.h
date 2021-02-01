@@ -33,6 +33,9 @@
 #define CAT(a,V...) _CAT(a,V)
 
 
+#define ISEOL(C)            ((C) == '\n' || (C) == '\r')
+
+
 #define FIRST(a,...)     a
 #define SECOND(a,b,...)  b
 #define THIRD(a,b,c,...) c

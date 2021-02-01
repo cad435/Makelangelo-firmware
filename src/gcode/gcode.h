@@ -99,13 +99,24 @@
 
 #include "config.h"
 #include "parser.h"
+#include "queue.h"
+#include <Arduino.h>
 
 
 class GcodeSuite {
 public:
 
+    //get latest Gcode from SerialStream and Process/Write into buffer. Nonblocking If no gcode available.
+    //returns number of processed bytes
+    uint8_t ReadSerial();
+
+    //get Latest Gcode from Buffer
+    int16_t getNextGcode();
+
+    void process_parsed_command(const bool no_ok = false);
 
 private:
+
 
  void D0(float, float, float, float, float, float);
  void D5();// - report current firmware version
