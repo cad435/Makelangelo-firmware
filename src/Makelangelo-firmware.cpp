@@ -10,12 +10,14 @@
 //------------------------------------------------------------------------------
 // INCLUDES
 //------------------------------------------------------------------------------
-
+#include "config.h"
+#include "gcode/parser.h"
 
 //------------------------------------------------------------------------------
 // GLOBALS
 //------------------------------------------------------------------------------
 
+extern GCodeParser parser;
 
 //------------------------------------------------------------------------------
 // Function Prototypes
@@ -24,82 +26,34 @@
 
 // runs once on machine start
 void setup() {
-  parser.start();
+  Serial.begin(115200);
 
-  eepromManager.loadAll();
-
-  // unitTestWrapDegrees();
-  // unitTestBitMacros();
-
-#ifdef HAS_SD
-  SD_setup();
-#endif
-#ifdef HAS_LCD
-  LCD_setup();
-#endif
-
-  // clockISRProfile();
-
-  motor_setup();
-  findStepDelay();
-
-  // easyPWM_init();
-
-  // initialize the plotter position.
-  float pos[NUM_AXIES];
-  for (ALL_AXIES(i)) pos[i] = 0;
-
-#ifdef MACHINE_HAS_LIFTABLE_PEN
-  if (NUM_AXIES >= 3) pos[2] = PEN_UP_ANGLE;
-#endif
-
-#if MACHINE_STYLE == SIXI && defined(HAS_GRIPPER)
-  gripper.setup();
-#endif
-
-  teleport(pos);
-
-  setFeedRate(DEFAULT_FEEDRATE);
-
-  robot_setup();
-
-  // reportAllMotors();
-
-  parser.M100();
-  parser.ready();
 }
 
 // after setup runs over and over.
 void loop() {
-  parser.update();
 
-#ifdef HAS_SD
-  SD_check();
-#endif
-#ifdef HAS_LCD
-  LCD_update();
-#endif
+  uint8_t cProcessed = parser.fetchAndParse();
 
-  // The PC will wait forever for the ready signal.
-  // if Arduino hasn't received a new instruction in a while, send ready() again
-  // just in case USB garbled ready and each half is waiting on the other.
-  if (!segment_buffer_full() && (millis() - parser.lastCmdTimeMs) > TIMEOUT_OK) {
-#ifdef HAS_TMC2130
-    {
-      uint32_t drv_status = driver_0.DRV_STATUS();
-      uint32_t stallValue = (drv_status & SG_RESULT_bm) >> SG_RESULT_bp;
-      Serial.print(stallValue, DEC);
-      Serial.print('\t');
-    }
-    {
-      uint32_t drv_status = driver_1.DRV_STATUS();
-      uint32_t stallValue = (drv_status & SG_RESULT_bm) >> SG_RESULT_bp;
-      Serial.println(stallValue, DEC);
-    }
-#endif
-    parser.ready();
+  if (cProcessed>0)
+  {
+        Serial.print("NumChars: "); Serial.print(cProcessed);
+      Serial.print(" CodeLetter: "); Serial.print(parser.command_letter);
+      Serial.print(" CodeNum: "); Serial.print(parser.codenum);
+      Serial.print(" SubCodeNum: "); Serial.print(parser.subcode);
+
+      if (parser.seen('L')) {Serial.print(" L:"); Serial.print(parser.value_long());}
+      if (parser.seen('R')) {Serial.print(" R:"); Serial.print(parser.value_long());}
+      if (parser.seen('U')) {Serial.print(" U:"); Serial.print(parser.value_long());}
+      if (parser.seen('V')) {Serial.print(" V:"); Serial.print(parser.value_long());}
+      if (parser.seen('W')) {Serial.print(" W:"); Serial.print(parser.value_long());}
+      if (parser.seen('T')) {Serial.print(" T:"); Serial.print(parser.value_long());}
+      if (parser.seen('J')) {Serial.print(" J:"); Serial.print(parser.value_long());}
+
+      Serial.println();
   }
 
-  meanwhile();
+
 }
+
 

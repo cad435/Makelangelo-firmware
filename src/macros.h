@@ -1,74 +1,52 @@
 #pragma once
+#include "defines.h"
 
-#include <Arduino.h>
+#define _FORCE_INLINE_ __attribute__((__always_inline__)) __inline__
+#define  FORCE_INLINE  __attribute__((always_inline)) inline
 
-#define TODEGREES (180.0 / PI)
-#define TORADIANS (PI / 180.0)
+#define WITHIN(N,L,H)       ((N) >= (L) && (N) <= (H))
+#define NUMERIC(a)          WITHIN(a, '0', '9')
+#define NUMERIC_SIGNED(a)   (NUMERIC(a) || (a) == '-' || (a) == '+')
+#define DECIMAL(a)          (NUMERIC(a) || a == '.')
+#define DECIMAL_SIGNED(a)   (DECIMAL(a) || (a) == '-' || (a) == '+')
 
-// for assembly in isr inner loop
-#define A(CODE) " " CODE "\n\t"
+// AVR compatibility
+#define strtof strtod
 
-// optimize code, please
-#define FORCE_INLINE __attribute__((always_inline)) inline
 
-// convenience
-#define PENDING(NOW, SOON) ((uint32_t)(NOW - (SOON)) < 0)
-#define ELAPSED(NOW, SOON) (!PENDING(NOW, SOON))
+#define SEC_TO_MS(N) uint32_t((N)*1000UL)
+#define MMM_TO_MMS(MM_M) float(float(MM_M) / 60.0f)
 
-// set bit on
-#ifndef SBI
-#  define SBI(NN, BB) (NN |= (1 << BB))
-#endif
 
-// set bit off
-#ifndef CBI
-#  define CBI(NN, BB) (NN &= ~(1 << BB))
-#endif
+//i have absolute no idea what those are doing...
+#define TERN(O,A,B)         _TERN(_ENA_1(O),B,A)    // OPTION converted to '0' or '1'
+#define TERN0(O,A)          _TERN(_ENA_1(O),0,A)    // OPTION converted to A or '0'
+#define TERN1(O,A)          _TERN(_ENA_1(O),1,A)    // OPTION converted to A or '1'
+#define TERN_(O,A)          _TERN(_ENA_1(O),,A)     // OPTION converted to A or '<nul>'
+#define _TERN(E,V...)       __TERN(_CAT(T_,E),V)    // Prepend 'T_' to get 'T_0' or 'T_1'
+#define __TERN(T,V...)      ___TERN(_CAT(_NO,T),V)  // Prepend '_NO' to get '_NOT_0' or '_NOT_1'
+#define ___TERN(P,V...)     THIRD(P,V)              // If first argument has a comma, A. Else B.
+#define _ENA_1(O)           _ISENA(CAT(_IS,CAT(ENA_, O)))
+#define _ISENA(V...)        IS_PROBE(V)
+#define IS_PROBE(V...) SECOND(V, 0)     // Get the second item passed, or 0
+#define _CAT(a,V...) a##V
+#define CAT(a,V...) _CAT(a,V)
 
-#define SET_BIT_ON(NN, BB)  SBI(NN, BB)
-#define SET_BIT_OFF(NN, BB) CBI(NN, BB)
-#define TEST(NN, BB)        (((NN >> BB) & 0x1) == 0x1)
-#define SET_BIT(NN, BB, TF) \
-  do {                      \
-    if (TF)                 \
-      SBI(NN, BB);          \
-    else                    \
-      CBI(NN, BB);          \
-  } while (0);
-#define FLIP_BIT(NN, BB) (NN ^= (1 << BB))
 
-// wrap all degrees to within -180...180.
-FORCE_INLINE float WRAP_DEGREES(float n) {
-  n = fmod(n, 360);
-  n += 360;
-  n = fmod(n, 360);
-  if (n > 180) n -= 360;
-  return n;
-}
+#define FIRST(a,...)     a
+#define SECOND(a,b,...)  b
+#define THIRD(a,b,c,...) c
 
-// wrap all radians within -PI...PI
-FORCE_INLINE float WRAP_RADIANS(float n) {
-  n = fmod(n, TWO_PI);
-  n += TWO_PI;
-  n = fmod(n, TWO_PI);
-  if (n > PI) n -= TWO_PI;
-  return n;
-}
 
-// use in for(ALL_AXIES(i)) { //i will be rising
-#define ALL_AXIES(NN) \
-  int NN = 0;         \
-  NN < NUM_AXIES;     \
-  ++NN
+#define TBI(N,B) (N ^= _BV(B))
+#define _BV32(b) (1UL << (b))
+#define TEST32(n,b) !!((n)&_BV32(b))
+#define SBI32(n,b) (n |= _BV32(b))
+#define CBI32(n,b) (n &= ~_BV32(b))
+#define TBI32(N,B) (N ^= _BV32(B))
 
-// use in for(ALL_MOTORS(i)) { //i will be rising
-#define ALL_MOTORS(NN) \
-  int NN = 0;          \
-  NN < NUM_MOTORS;     \
-  ++NN
 
-// use in for(ALL_MUSCLES(i)) { //i will be rising
-#define ALL_MUSCLES(NN) \
-  int NN = 0;           \
-  NN < NUM_MUSCLES;     \
-  ++NN
+#define COUNT(a)            (sizeof(a)/sizeof(*a))
+
+
+
