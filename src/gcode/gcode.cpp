@@ -39,6 +39,4 @@ void GcodeSuite::process_parsed_command(const bool no_ok = false) {
         }
     break;
     }
-
-  if (!no_ok) queue.ok_to_send();
 }

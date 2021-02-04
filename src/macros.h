@@ -1,8 +1,15 @@
 #pragma once
 #include "defines.h"
 
+
 #define _FORCE_INLINE_ __attribute__((__always_inline__)) __inline__
 #define  FORCE_INLINE  __attribute__((always_inline)) inline
+
+
+#ifndef M_PI
+  #define M_PI 3.14159265358979323846f
+#endif
+
 
 #define WITHIN(N,L,H)       ((N) >= (L) && (N) <= (H))
 #define NUMERIC(a)          WITHIN(a, '0', '9')
@@ -50,6 +57,10 @@
 
 
 #define COUNT(a)            (sizeof(a)/sizeof(*a))
+
+
+#define RAD2DEG(r) ((r)*180.0f/float(M_PI))
+#define DEG2RAD(d) ((d)*float(M_PI)/180.0f)
 
 
 
