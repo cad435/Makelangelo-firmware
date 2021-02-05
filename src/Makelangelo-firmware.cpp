@@ -20,6 +20,12 @@
 
 extern GCodeParser parser;
 
+
+#if MACHINE_STYLE == SIXI
+  #include "robots/sixi.h"
+  sixi robot;
+#endif
+
 //------------------------------------------------------------------------------
 // Function Prototypes
 //------------------------------------------------------------------------------
