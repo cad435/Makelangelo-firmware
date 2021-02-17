@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include "macros.h"
 
-class sensor
+class Sensor
 {
 
 public:
